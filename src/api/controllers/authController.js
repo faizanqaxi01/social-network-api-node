@@ -33,7 +33,6 @@ module.exports.signup = async (req, res) => {
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAgeMilliSec });
     res.status(201).json({ user: user._id });
   } catch (err) {
-    // const errors = handleErrors(err);
     console.log('Error.. ', err);
     res.status(400).json({ err });
   }
@@ -49,7 +48,6 @@ module.exports.login = async (req, res) => {
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(200).json({ user: user._id });
   } catch (err) {
-    const errors = handleErrors(err);
     res.status(400).json({ errors });
   }
 };

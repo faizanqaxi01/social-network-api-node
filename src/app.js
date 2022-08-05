@@ -27,7 +27,11 @@ mongoose
   })
   .then((result) => {
     console.log('Connected to the mongoDb Database.. ');
-    app.listen(config.serverPort);
+    const server = app.listen(config.serverPort);
+    const io = init(server);
+    io.on('connection', () => {
+      console.log('Client connected through socket');
+    });
     console.log('Listening to port ', config.serverPort);
   })
   .catch((err) => console.log(err));
