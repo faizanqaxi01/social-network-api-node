@@ -12,6 +12,8 @@ const config = require('../config/config');
 const indexRouter = require('./api/routes/indexRouter');
 const authRouter = require('./api/routes/authRouter');
 const userRouter = require('./api/routes/userRouter');
+const postRouter = require('./api/routes/postRouter');
+const feedRouter = require('./api/routes/feedRouter');
 const { requireAuth, checkUser } = require('./api/middlewares/authMiddleware');
 
 // Initializing Express App
@@ -46,6 +48,8 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', requireAuth, userRouter);
+app.use('/posts', postRouter);
+app.use('/feed', feedRouter);
 
 // Error Handling
 
@@ -62,7 +66,6 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  // res.render("error");
 });
 
 // Exporting the server app
