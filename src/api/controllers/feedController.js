@@ -9,6 +9,12 @@ module.exports.getFeed = async (req, res) => {
     const perPage = 3;
 
     const user = await User.findById(req.userId);
+    // If the user is not paid, do not show the feed
+    if (user.type === 'unpaid')
+      return res
+        .status(400)
+        .json({ error: 'Error: Only paid users can access the feed' });
+
     const total = await Post.find({
       userId: { $in: user.following },
     }).countDocuments();

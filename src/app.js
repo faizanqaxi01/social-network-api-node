@@ -14,7 +14,12 @@ const authRouter = require('./api/routes/authRouter');
 const userRouter = require('./api/routes/userRouter');
 const postRouter = require('./api/routes/postRouter');
 const feedRouter = require('./api/routes/feedRouter');
+const paymentRouter = require('./api/routes/paymentRouter');
+const moderatorRouter = require('./api/routes/moderatorRouter');
 const { requireAuth, checkUser } = require('./api/middlewares/authMiddleware');
+
+// Dependant External imports
+const stripe = require('stripe')(`${config.STRIPE_SECRET_KEY}`);
 
 // Initializing Express App
 const app = express();
@@ -50,6 +55,8 @@ app.use('/auth', authRouter);
 app.use('/users', requireAuth, userRouter);
 app.use('/posts', postRouter);
 app.use('/feed', feedRouter);
+app.use('/payment', paymentRouter);
+app.use('/moderator', moderatorRouter);
 
 // Error Handling
 

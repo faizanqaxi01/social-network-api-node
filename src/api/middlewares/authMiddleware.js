@@ -46,4 +46,15 @@ const checkUser = (req, res, next) => {
   }
 };
 
-module.exports = { requireAuth, checkUser };
+const checkModerator = (req, res, next) => {
+  User.findById(req.body.id)
+    .then((user) => {
+      if (!user.isModerator) {
+        return res.status(401).json({ err: 'Error: Not a moderator' });
+      }
+      next();
+    })
+    .catch((error) => res.status(500).json(error));
+};
+
+module.exports = { requireAuth, checkUser, checkModerator };

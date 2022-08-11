@@ -18,9 +18,13 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  isAdmin: {
+  isModerator: {
     type: Boolean,
     default: false,
+  },
+  type: {
+    type: String,
+    default: 'unpaid',
   },
   followers: {
     type: Array,
