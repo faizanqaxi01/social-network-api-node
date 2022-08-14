@@ -1,18 +1,37 @@
 //Internal imports
-const config = require('../../../config/config');
 const User = require('../models/User');
 
 // Dependant External imports
-const stripe = require('stripe')(`${config.STRIPE_SECRET_KEY}`);
+const stripe = require('stripe')(`${process.env.STRIPE_SECRET_KEY}`);
 
 module.exports.chargePayment = async (req, res) => {
   try {
     let chargedAmount = 1000;
 
+    const paymentMethod = await stripe.paymentMethods.create({
+      type: 'card',
+      card: {
+        number: '4242424242424242',
+        exp_month: 8,
+        exp_year: 2023,
+        cvc: '314',
+      },
+    });
+
+    const token = await stripe.tokens.create({
+      card: {
+        number: '4242424242424242',
+        exp_month: 8,
+        exp_year: 2023,
+        cvc: '314',
+      },
+    });
+
     const customer = await stripe.customers.create({
       email: req.body.email,
-      source: req.body.stripeToken,
-      id: req.userId,
+      // source: token.id,
+      id: req.id,
+      payment_method: paymentMethod.id,
     });
 
     const charge = await stripe.charges.create({
@@ -23,7 +42,7 @@ module.exports.chargePayment = async (req, res) => {
     });
 
     const updatedUser = await User.findOneAndUpdate(
-      { _id: req.userId },
+      { _id: req.id },
       { $set: { type: 'paid' } }
     );
 

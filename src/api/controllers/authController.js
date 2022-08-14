@@ -2,6 +2,8 @@
 const User = require('../models/User');
 const createToken = require('../helpers/helperFunctions');
 const { validateSignUp, validateLogin } = require('../validation/joi');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 // Controller Actions
 
@@ -44,7 +46,7 @@ module.exports.signup = async (req, res) => {
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAgeMilliSec });
     res.status(201).json({ user: user._id });
   } catch (err) {
-    res.status(400).json({ err });
+    res.status(400).json({ err: ' Something went wrong.. ' });
   }
 };
 
@@ -62,9 +64,20 @@ module.exports.login = async (req, res) => {
 
     // User login
     const user = await User.login(email, password);
+
+    console.log('first');
     const token = createToken(user._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+
+    console.log('first');
+    // Setting expiry time for jwt
+    const maxAgeSec = 1 * 60 * 60; // 1 hour in seconds
+    const maxAgeMilliSec = maxAgeSec * 1000; // 1 hour in seconds
+
+    // Sending the response
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAgeMilliSec });
+    console.log('first');
     res.status(200).json({ user: user._id });
+    console.log('first');
   } catch (err) {
     res.status(400).json({ err });
   }
@@ -73,5 +86,5 @@ module.exports.login = async (req, res) => {
 // Logout
 module.exports.logout = async (req, res) => {
   res.cookie('jwt', '', { maxAge: 1 });
-  res.redirect('/');
+  res.status(200).json({ msg: 'logged out' });
 };

@@ -1,3 +1,6 @@
+// External Imports
+const io = require('../../socket');
+
 // Internal Imports
 const Post = require('../models/Post');
 
@@ -20,7 +23,7 @@ module.exports.createPost = async (req, res) => {
     const newPost = await Post.create({
       userId: req.body.id,
       title: req.body.title,
-      description: req.body.description,
+      desc: req.body.desc,
     });
 
     io.getIO().emit('postCreate', { message: 'Post created', newPost });
@@ -34,11 +37,11 @@ module.exports.createPost = async (req, res) => {
 // Update a post - protected route
 module.exports.updatePost = async (req, res) => {
   try {
-    if (!(req.body.userId && req.body.title && req.body.desc)) {
+    if (!(req.body.id && req.body.title && req.body.desc)) {
       return res.status(400).send('Error: Missing Field');
     }
     const post = await Post.findById(req.params.id);
-    if (!(req.body.id === post.userId || req.body.isModerator)) {
+    if (!(req.body.id === post.userId.toString() || req.body.isModerator)) {
       return res
         .status(400)
         .send('Error: You are not authorized to update this post');

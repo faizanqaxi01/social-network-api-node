@@ -11,7 +11,7 @@ const authRouter = express.Router();
 // Routing requests to its corresponding controllers
 authRouter.post('/', authController.signup);
 authRouter.post('/login', authController.login);
-authRouter.post('/logout', authController.logout);
+authRouter.get('/logout', authController.logout);
 authRouter.all('/', invalidController.badRequest); // Any invalid operation on this route
 
 // Exporting the module

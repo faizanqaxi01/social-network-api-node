@@ -8,38 +8,36 @@ const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 
 //Internal imports
-const config = require('../config/config');
 const indexRouter = require('./api/routes/indexRouter');
 const authRouter = require('./api/routes/authRouter');
 const userRouter = require('./api/routes/userRouter');
+const followRouter = require('./api/routes/followRouter');
 const postRouter = require('./api/routes/postRouter');
 const feedRouter = require('./api/routes/feedRouter');
 const paymentRouter = require('./api/routes/paymentRouter');
 const moderatorRouter = require('./api/routes/moderatorRouter');
+const invalidRouter = require('./api/routes/invalidRouter');
 const { requireAuth, checkUser } = require('./api/middlewares/authMiddleware');
+const { init } = require('./socket');
 
 // Dependant External imports
-const stripe = require('stripe')(`${config.STRIPE_SECRET_KEY}`);
+const stripe = require('stripe')(`${process.env.STRIPE_SECRET_KEY}`);
 
 // Initializing Express App
 const app = express();
 
 // Connecting to mongoDb Database and starting the server
-const dbURI = config.mongoDbURI;
+const dbURI = process.env.MONGO_DB_URI;
 mongoose
-  .connect(dbURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
+  .connect(dbURI)
   .then((result) => {
     console.log('Connected to the mongoDb Database.. ');
-    const server = app.listen(config.serverPort);
+    const server = app.listen(process.env.PORT);
     const io = init(server);
     io.on('connection', () => {
       console.log('Client connected through socket');
     });
-    console.log('Listening to port ', config.serverPort);
+    console.log('Listening to port ', process.env.PORT);
   })
   .catch((err) => console.log(err));
 
@@ -53,10 +51,12 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', requireAuth, userRouter);
+app.use('/follow', requireAuth, followRouter);
 app.use('/posts', postRouter);
 app.use('/feed', feedRouter);
 app.use('/payment', paymentRouter);
 app.use('/moderator', moderatorRouter);
+app.use('/*', invalidRouter);
 
 // Error Handling
 

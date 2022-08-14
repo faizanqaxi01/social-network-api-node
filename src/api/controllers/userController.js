@@ -16,31 +16,29 @@ module.exports.getUser = async (req, res) => {
 
 // Update a user - protected route
 module.exports.updateUser = async (req, res) => {
-  if (req.body.id === req.params.id || req.body.isAdmin) {
-    try {
-      const user = await User.findByIdAndUpdate(req.params.id, {
-        $set: req.body,
-      });
-      res.status(200).json('Account has been updated');
-    } catch (err) {
-      return res.status(500).json(err);
-    }
-  } else {
-    return res.status(400).json('Bad Request !!');
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, {
+      $set: req.body,
+    });
+    if (user === null)
+      return res.status(400).json({ error: 'No account with this id exists' });
+
+    res.status(200).json({ msg: 'Account has been updated' });
+  } catch (err) {
+    return res.status(500).json({ err: err });
   }
 };
 
 // Delete a user
 module.exports.deleteUser = async (req, res) => {
-  if (req.body.id === req.params.id || req.body.isAdmin) {
-    try {
-      await User.findByIdAndDelete(req.params.id);
-      res.status(200).json('Account has been deleted');
-    } catch (err) {
-      return res.status(500).json(err);
-    }
-  } else {
-    return res.status(400).json('Bad Request !!');
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (user === null)
+      return res.status(400).json({ error: 'No account with this id exists' });
+
+    res.status(200).json({ msg: 'Account has been deleted', user: user });
+  } catch (err) {
+    return res.status(500).json({ err: err });
   }
 };
 
@@ -67,7 +65,7 @@ module.exports.followUser = async (req, res) => {
     toFollow.followers.push(user._id);
 
     // save the toFollow user
-    toFollow = await user.save();
+    toFollow = await toFollow.save();
 
     // send the success response
     res.json({
@@ -93,18 +91,20 @@ module.exports.unfollowUser = async (req, res) => {
       return res.json({ error: 'Error: Not following' });
 
     // update the following of current user - Remove from following
-    user.following = user.following.filter((item) => item !== value);
+    user.following = user.following.filter(
+      (item) => item.toString() != toUnfollow._id.toString()
+    );
 
     // save the current user
     user = await user.save();
 
     // update the followers of toUnfollow user - remove from followers
     toUnfollow.followers = toUnfollow.followers.filter(
-      (item) => item !== value
+      (item) => item.toString() !== user._id.toString()
     );
 
     // save the toUnfollow user
-    toUnfollow = await user.save();
+    toUnfollow = await toUnfollow.save();
 
     // send the success response
     res.json({

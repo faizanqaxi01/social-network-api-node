@@ -3,13 +3,12 @@ const jwt = require('jsonwebtoken');
 
 // Internal Imports
 const User = require('../models/User');
-const config = require('../../../config/config');
 
 // Checking if jwt token exists and is verified
 const requireAuth = (req, res, next) => {
   if (req.cookies.jwt) {
     const token = req.cookies.jwt;
-    jwt.verify(token, config.jwtSecret, (err, decodedToken) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
       if (err) {
         res.status(401);
         res.send('Status: 401, Unauthorized client');
@@ -27,7 +26,7 @@ const requireAuth = (req, res, next) => {
 // Checking current user
 const checkUser = (req, res, next) => {
   if (req.cookies.jwt) {
-    jwt.verify(token, config.jwtSecret, async (err, decodedToken) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
       if (err) {
         res.locals.user = null;
         res.status(401);
