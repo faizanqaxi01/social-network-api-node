@@ -6,7 +6,6 @@ const postController = require('../controllers/postController');
 const invalidController = require('../controllers/invalidController');
 const {
   requireAuth,
-  checkUser,
   checkModerator,
 } = require('../middlewares/authMiddleware');
 

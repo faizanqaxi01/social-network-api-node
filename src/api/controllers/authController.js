@@ -18,7 +18,6 @@ module.exports.signup = async (req, res) => {
       email,
       password,
     });
-    if (error) return res.status(400).json({ error: 'Invalid Form Data !!' });
 
     // Checking if user does not exist already
     const checkUser = await User.findOne({ email: req.body.email });
@@ -45,8 +44,8 @@ module.exports.signup = async (req, res) => {
     // Sending the response
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAgeMilliSec });
     res.status(201).json({ user: user._id });
-  } catch (err) {
-    res.status(400).json({ err: ' Something went wrong.. ' });
+  } catch (error) {
+    res.status(400).json({ error: ' Something went wrong.. ' });
   }
 };
 
@@ -60,26 +59,21 @@ module.exports.login = async (req, res) => {
       email,
       password,
     });
-    if (error) return res.status(400).json({ error: 'Invalid Form Data !!' });
 
     // User login
     const user = await User.login(email, password);
 
-    console.log('first');
     const token = createToken(user._id);
 
-    console.log('first');
     // Setting expiry time for jwt
     const maxAgeSec = 1 * 60 * 60; // 1 hour in seconds
     const maxAgeMilliSec = maxAgeSec * 1000; // 1 hour in seconds
 
     // Sending the response
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAgeMilliSec });
-    console.log('first');
     res.status(200).json({ user: user._id });
-    console.log('first');
-  } catch (err) {
-    res.status(400).json({ err });
+  } catch (error) {
+    res.status(400).json({ error });
   }
 };
 

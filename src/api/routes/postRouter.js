@@ -4,7 +4,7 @@ const express = require('express');
 // Internal Imports
 const postController = require('../controllers/postController');
 const invalidController = require('../controllers/invalidController');
-const { requireAuth, checkUser } = require('../middlewares/authMiddleware');
+const { requireAuth } = require('../middlewares/authMiddleware');
 
 //Setting up router
 const postRouter = express.Router();
