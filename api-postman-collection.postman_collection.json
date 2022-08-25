@@ -1,0 +1,365 @@
+{
+	"variables": [],
+	"info": {
+		"name": "node-social-network-postman-collection",
+		"_postman_id": "6ca550a4-837f-93be-e84e-f936d75a3e00",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://social-network-api-node.herokuapp.com/",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"faizan10@gmail.com\",\n    \"password\": \"test123\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/auth/login",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/auth/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"faizan10@gmail.com\",\n    \"password\": \"test123\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/auth/logout",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/auth/logout",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"faizan10@gmail.com\",\n    \"password\": \"test123\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/auth/",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/auth/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"faizan5\",\n    \"lastName\": \"qazi\",\n    \"email\": \"faizan5@gmail.com\",\n    \"password\": \"12345\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/users/62f53c74a1e78679f9a89434",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "faizan10@gmail.com",
+						"password": "test123",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "https://social-network-api-node.herokuapp.com/users/62f53c74a1e78679f9a89434",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic ZmFpemFuMTBAZ21haWwuY29tOnRlc3QxMjM=",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"faizan2\",\n    \"lastName\": \"qazi\",\n    \"email\": \"faizan3@gmail.com\",\n    \"password\": \"12345\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/users/62f53c74a1e78679f9a89434",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/users/62f53c74a1e78679f9a89434",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"faizan\",\n    \"email\": \"faizan10@gmail.com\",\n    \"password\": \"12345\",\n    \"dummy\": \"dummy\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/users/62f53c74a1e78679f9a89434",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/users/62f53c74a1e78679f9a89434",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"faizan\",\n    \"email\": \"faizan10@gmail.com\",\n    \"password\": \"12345\",\n    \"dummy\": \"dummy\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/follow/62f5289d63c1b9436056b74f",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/follow/62f5289d63c1b9436056b74f",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"62f5288863c1b9436056b748\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/follow/62f5289d63c1b9436056b74f",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/follow/62f5289d63c1b9436056b74f",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"62f5288863c1b9436056b748\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/posts/",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/posts/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"62f5289d63c1b9436056b74f\",\n\t\"title\": \"test 6 post\",\n\t\"desc\": \"test 65 desc\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/posts/62f540873038a6f7eddd7b6a",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/posts/62f540873038a6f7eddd7b6a",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"62f5289d63c1b9436056b74f\",\n\t\"title\": \"test 6 post\",\n\t\"desc\": \"test 65 desc\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/posts/62f540873038a6f7eddd7b6a",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/posts/62f540873038a6f7eddd7b6a",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"62f5288863c1b9436056b748\",\n\t\"title\": \"updated post\",\n\t\"desc\": \"updated desc\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/posts/62f540873038a6f7eddd7b6a",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/posts/62f540873038a6f7eddd7b6a",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"62f5288863c1b9436056b748\",\n\t\"title\": \"updated post\",\n\t\"desc\": \"updated desc\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/feed/62f5288863c1b9436056b748",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/feed/62f5288863c1b9436056b748",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"62f5289d63c1b9436056b74f\",\n\t\"title\": \"test 6 post\",\n\t\"desc\": \"test 65 desc\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/payment",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/payment",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"62f5288863c1b9436056b748\",\n\t\"email\": \"faizan10@gmail.com\",\n\t\"source\": \"test source\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/moderator/posts/62f540873038a6f7eddd7b6a",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/moderator/posts/62f540873038a6f7eddd7b6a",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"62f5288863c1b9436056b748\",\n\t\"title\": \"updated post\",\n\t\"desc\": \"updated desc\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://social-network-api-node.herokuapp.com/moderator/posts/62f540873038a6f7eddd7b6a",
+			"request": {
+				"url": "https://social-network-api-node.herokuapp.com/moderator/posts/62f540873038a6f7eddd7b6a",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"62f5288863c1b9436056b748\",\n\t\"title\": \"updated post\",\n\t\"desc\": \"updated desc\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
