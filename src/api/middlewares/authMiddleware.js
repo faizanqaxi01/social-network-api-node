@@ -17,29 +17,6 @@ const requireAuth = (req, res, next) => {
       }
     });
   } else {
-    console.log('No jwt token');
-    res.status(401);
-    res.send('Status: 401, Unauthorized client');
-  }
-};
-
-// Checking current user
-const checkUser = (req, res, next) => {
-  if (req.cookies.jwt) {
-    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
-      if (err) {
-        res.locals.user = null;
-        res.status(401);
-        res.send('Status: 401, Unauthorized client');
-        next();
-      } else {
-        let user = await User.findById(decodedToken.id);
-        res.locals.user = user;
-        next();
-      }
-    });
-  } else {
-    console.log('No jwt token');
     res.status(401);
     res.send('Status: 401, Unauthorized client');
   }
@@ -56,4 +33,4 @@ const checkModerator = (req, res, next) => {
     .catch((error) => res.status(500).json(error));
 };
 
-module.exports = { requireAuth, checkUser, checkModerator };
+module.exports = { requireAuth, checkModerator };

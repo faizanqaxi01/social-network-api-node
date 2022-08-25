@@ -52,7 +52,6 @@ module.exports.updatePost = async (req, res) => {
     io.getIO().emit('postUpdate', { message: 'Post updated', updatedPost });
     res.status(200).json('Post has been updated');
   } catch (err) {
-    console.log('Error.. ', err);
     res.status(400).json({ err });
   }
 };

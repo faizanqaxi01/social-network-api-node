@@ -20,8 +20,6 @@ module.exports.updateUser = async (req, res) => {
     const user = await User.findByIdAndUpdate(req.params.id, {
       $set: req.body,
     });
-    if (user === null)
-      return res.status(400).json({ error: 'No account with this id exists' });
 
     res.status(200).json({ msg: 'Account has been updated' });
   } catch (err) {
@@ -33,9 +31,6 @@ module.exports.updateUser = async (req, res) => {
 module.exports.deleteUser = async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
-    if (user === null)
-      return res.status(400).json({ error: 'No account with this id exists' });
-
     res.status(200).json({ msg: 'Account has been deleted', user: user });
   } catch (err) {
     return res.status(500).json({ err: err });
@@ -53,7 +48,7 @@ module.exports.followUser = async (req, res) => {
 
     // if already following
     if (user.following.includes(req.params.id))
-      return res.json({ error: 'Error: Already following' });
+      return res.status(400).json({ error: 'Error: Already following' });
 
     // update the following of current user - add to following
     user.following.push(toFollow._id);
@@ -68,7 +63,7 @@ module.exports.followUser = async (req, res) => {
     toFollow = await toFollow.save();
 
     // send the success response
-    res.json({
+    res.status(200).json({
       success: true,
       msg: 'Followed successfully',
     });
@@ -88,7 +83,7 @@ module.exports.unfollowUser = async (req, res) => {
 
     // if not following
     if (!user.following.includes(req.params.id))
-      return res.json({ error: 'Error: Not following' });
+      return res.status(400).json({ error: 'Error: Not following' });
 
     // update the following of current user - Remove from following
     user.following = user.following.filter(

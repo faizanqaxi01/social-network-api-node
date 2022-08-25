@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const logger = require('morgan');
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
+const { MongoMemoryServer } = require('mongodb-memory-server');
 
 //Internal imports
 const indexRouter = require('./api/routes/indexRouter');
@@ -17,7 +18,7 @@ const feedRouter = require('./api/routes/feedRouter');
 const paymentRouter = require('./api/routes/paymentRouter');
 const moderatorRouter = require('./api/routes/moderatorRouter');
 const invalidRouter = require('./api/routes/invalidRouter');
-const { requireAuth, checkUser } = require('./api/middlewares/authMiddleware');
+const { requireAuth } = require('./api/middlewares/authMiddleware');
 const { init } = require('./socket');
 
 // Dependant External imports
@@ -27,19 +28,40 @@ const stripe = require('stripe')(`${process.env.STRIPE_SECRET_KEY}`);
 const app = express();
 
 // Connecting to mongoDb Database and starting the server
-const dbURI = process.env.MONGO_DB_URI;
-mongoose
-  .connect(dbURI)
-  .then((result) => {
-    console.log('Connected to the mongoDb Database.. ');
-    const server = app.listen(process.env.PORT);
-    const io = init(server);
-    io.on('connection', () => {
-      console.log('Client connected through socket');
-    });
-    console.log('Listening to port ', process.env.PORT);
-  })
-  .catch((err) => console.log(err));
+if (process.env.NODE_ENV === 'dev') {
+  const dbURI = process.env.MONGO_DB_URI;
+  mongoose
+    .connect(dbURI)
+    .then((result) => {
+      console.log('Connected to the mongoDb Database.. ');
+      const server = app.listen(process.env.PORT || 3000);
+      const io = init(server);
+      io.on('connection', () => {
+        console.log('Client connected through socket');
+      });
+      console.log('Listening to port ', process.env.PORT);
+    })
+    .catch((err) => console.log(err));
+} else {
+  mongoServer = MongoMemoryServer.create().then((mongoUri) => {
+    const uri = mongoUri.getUri();
+    mongoose
+      .connect(uri)
+      .then((result) => {
+        console.log('Connected to the test database');
+        const server = app.listen(process.env.PORT || 3000);
+        const io = require('./socket').init(server);
+        io.on('connection', () => {
+          console.log('Client connected through socket');
+        });
+        console.log('Server running.. ');
+      })
+      .catch((err) => {
+        console.log('Error: ');
+        console.log(err);
+      });
+  });
+}
 
 // Middlewares
 app.use(logger('dev'));
